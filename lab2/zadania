@@ -1,0 +1,36 @@
+def analiza_tekstu(text):
+    words = text.split()
+    sentences = text.split('.')
+    paragraphs = text.split('  ')
+    stop_words = ["i", "a", "the"]
+
+    word_count = len(words)
+    sentence_count = len(sentences)
+    paragraph_count = len(paragraphs)
+
+    transformed_words = []
+    for word in words:
+        if (word.lower().startswith('a') or word.lower().startswith('A')) and word not in stop_words:
+
+            transformed_words.append(word[::-1])
+
+
+    return f"Liczba słów: {word_count}\nLiczba zdań: {sentence_count}\nLiczba akapitów: {paragraph_count}\nPrzekształcone słowa: {transformed_words}"
+
+def nie_jed_dane(data):
+    numbers = list(filter(lambda x: isinstance(x, (int, float)), data))
+    strings = list(filter(lambda x: isinstance(x, str), data))
+    tuples = list(filter(lambda x: isinstance(x, tuple), data))
+
+    max_number = max(numbers) if numbers else None
+    longest_string = max(strings, key=len) if strings else None
+    largest_tuple = max(tuples, key=len) if tuples else None
+
+    return f"Największa liczba: {max_number}, Najdłuższy ciąg: {longest_string}, Największy krotka: {largest_tuple}"
+
+
+text = 'Contrary to popular belief, apple Lorem Ipsum is not simply random text.  It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,  comes from a line in section 1.10.32.'
+test_data = [5, "hello", (1, 2, 3), 3.14, "world", (4, 5)]
+
+print(analiza_tekstu(text))
+print(nie_jed_dane(test_data))
