@@ -1,0 +1,43 @@
+let rec Fib n =
+    match n with
+    |0 -> 0
+    |1 -> 1
+    |_ -> Fib(n-1) + Fib (n-2)
+
+//rekurencyjna ogonowa
+let FibTail n =
+    let rec aux n a b =
+        if n<= 0 then a
+        elif n= 1 then b
+        else aux (n-1) b (a+b)
+    aux n 0 1
+
+let rec permutacje lista =
+    match lista with
+    | [] -> [[]]
+    | _ ->
+        lista |> List.collect (fun x ->
+            permutacje (List.filter ((<>) x) lista)
+            |> List.map (fun p -> x :: p))
+
+printf "Podaj liczby oddzielone spacjami: "
+let liczby = Console.ReadLine().Split(' ') |> Array.toList |> List.map int
+let wynik_permutacje = permutacje liczby
+printfn "Wszystkie permutacje: %A" wynik_permutacje
+
+
+
+let fibResult = Fib 10
+printfn "Wyniki: %d" fibResult
+let fibTailResult = FibTail 10
+printfn "Wyniki: %d" fibTailResult
+
+let rec hanoi n a b c =
+    if n > 0 then
+        hanoi (n-1) a c b
+        printfn "Przenieś dysk z %s do %s" a b
+        hanoi (n-1) c b a
+
+printf "Podaj liczbę dysków: "
+let n = int (Console.ReadLine())
+hanoi n "A" "B" "C"
