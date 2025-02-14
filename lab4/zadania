@@ -1,0 +1,59 @@
+open System
+
+[<EntryPoint>]
+let main argv =
+    printfn "Podaj swoją wagę w kilogramach:"
+    let waga = Console.ReadLine() |> float
+    printfn "Podaj swój wzrost w centymetrach:"
+    let wzrost = Console.ReadLine() |> float
+
+    let bmi = waga / ((wzrost / 100.0) * (wzrost / 100.0))
+
+    if bmi < 18.5 then 
+        printfn "Niedowaga %g" bmi
+    elif bmi < 25.0 then 
+        printfn "Waga prawidłowa %g" bmi
+    elif bmi < 30.0 then 
+        printfn "Nadwaga %g" bmi
+    else 
+        printfn "Otyłość %g" bmi
+    
+    0
+
+
+
+
+
+
+open System
+
+[<EntryPoint>]
+let main argv =
+    let kursy = 
+        Map [
+            ("USD", 1.0);
+            ("EUR", 0.94);
+            ("GBP", 0.82);
+            ("PLN", 4.6)
+        ]
+    
+    printfn "Podaj kwotę do przeliczenia:"
+    let kwota = Console.ReadLine() |> float
+    
+    printfn "Podaj walutę źródłową (np. USD, EUR, GBP):"
+    let walutaZrodlowa = Console.ReadLine()
+    
+    printfn "Podaj walutę docelową (np. USD, EUR, GBP):"
+    let walutaDocelowa = Console.ReadLine()
+
+    let kursZrodlowy = kursy.TryFind(walutaZrodlowa)
+    let kursDocelowy = kursy.TryFind(walutaDocelowa)
+
+    if kursZrodlowy.IsSome && kursDocelowy.IsSome then
+        let przeliczonaKwota = kwota * kursZrodlowy.Value / kursDocelowy.Value
+        printfn "Przeliczona kwota: %.2f %s" przeliczonaKwota walutaDocelowa
+    else
+        printfn "Błąd: Niepoprawna waluta!"
+
+    0
+
