@@ -1,0 +1,35 @@
+open System
+
+let usun_duplikaty tekst =
+    tekst.Split(' ')
+    |> Array.distinct
+    |> Array.toList
+
+printf "Podaj słowa oddzielone spacjami: "
+let a = Console.ReadLine()
+
+match a with
+| null -> printfn "Brak danych."
+| _ ->
+    let wynik = usun_duplikaty a
+    printfn "Unikalne słowa: %A" wynik
+
+
+
+
+let zmien_format wpis =
+    wpis.Split(';')
+    |> Array.map (fun s -> s.Trim())
+    |> function
+        | [| imie; nazwisko; wiek |] -> sprintf "%s, %s (%s lat)" nazwisko imie wiek
+        | _ -> "Niepoprawny format"
+
+printf "Podaj dane: "
+let rec pobierz_dane () =
+    let a = Console.ReadLine()
+    if String.IsNullOrWhiteSpace(wejscie) then []
+    else zmien_format a :: pobierz_dane()
+
+let wyniki = pobierz_dane()
+printfn "Sformatowane wpisy:"
+wyniki |> List.iter (printfn "%s")
