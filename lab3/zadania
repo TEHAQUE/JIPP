@@ -1,0 +1,48 @@
+class Employee:
+    def __init__(self, name, age, salary):
+        self.name = name
+        self.age = age
+        self.salary = salary
+
+    def getInfo(self):
+        return( f"Pracownik: {self.name}"
+                f"\t\t Wiek: {self.age}"
+                f"\t\t Wynagrodzenie: {self.salary}")
+
+from Employee import Employee
+from EmployeesManager import EmployeesManager
+
+pracownik = Employee("Jan Kowalski", 24, 4544)
+pracownik2 = Employee("Jan Kowalski", 214, 231544)
+
+pracowniki = EmployeesManager()
+pracowniki.addEmplyees(pracownik)
+pracowniki.addEmplyees(pracownik2)
+print(pracowniki.viewEmployees())
+
+class EmployeesManager:
+    def __init__(self):
+        self.employees = []
+
+    #dodwanie pracownika
+    def addEmplyees(self, employees):
+        self.employees.append(employees)
+        print(f"Pracownik {employees} został dodany do listy")
+
+    def viewEmployees(self):
+        if not self.employees:
+            print(f"Lista pracowników jest pusta")
+        else:
+            for employee in self.employees:
+                print(employee.getInfo())
+
+    def removeEmployees(self,employees, min, max):
+        for employee in employees:
+            if employee.age in range(min,max):
+                employees.remove(employee)
+
+    def searchEmployee(self, employees, firstname, lastname):
+        for employee in employees:
+            x, y = employee.name.split()
+            if x == firstname or y == lastname:
+                return f"{x} {y}"
